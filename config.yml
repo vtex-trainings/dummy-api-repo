@@ -1,0 +1,54 @@
+title: A brand new course for you to learn
+tagline: Learn how to make courses on the course maker using a course
+description: Here you might use some MD probably
+template:
+  name: ''
+  repo: undefined-template
+before:
+  - body: hello-world.md
+    title: Hello
+    type: createIssue
+steps:
+  - title: Hello
+    description: ''
+    event: status
+    link: '{{ repoUrl }}/issues/1'
+    actions:
+      - type: gate
+        left: '%payload.state'
+        operator: ===
+        right: success
+      - type: respond
+        with: new-issue.md
+        issue: 0
+        data:
+          nextIssue: '1'
+          nextName: Here you can set another title for this course
+      - body: some-tests.md
+        title: Here you can set another title for this course
+        type: createIssue
+  - title: Here you can set another title for this course
+    description: ''
+    event: status
+    link: '{{ repoUrl }}/issues/2'
+    actions:
+      - type: gate
+        left: '%payload.state'
+        operator: ===
+        right: success
+      - type: respond
+        with: new-issue.md
+        issue: 1
+        data:
+          nextIssue: '2'
+          nextName: Here you can set another title for this course
+      - body: wrapping-up.md
+        title: Here you can set another title for this course
+        type: createIssue
+  - title: Here you can set another title for this course
+    description: >-
+      I don't know yet if this is mandatory. If so, I think we have to have
+      objects for defining every step
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/3'
+    actions: []
